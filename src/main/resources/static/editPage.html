@@ -23,7 +23,7 @@
         },
         mounted(){
             var url = location.search;
-            if (url.indexOf("?") != -1) {
+            if (url.indexOf("?") !== -1) {
                 var str = url.substr(1);
                 strs = str.split("&");
             }
