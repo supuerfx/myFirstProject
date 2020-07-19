@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>成员列表</title>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <style>
+        table tr td{
+            border:1px solid gray;
+        }
+        table{
+            border-collapse:collapse;
+            width:300px;
+        }
+        tr.firstLine{
+            background-color: lightGray;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <table align="center">
+            <tr class="firstLine">
+                <td>name</td>
+                <td>id</td>
+                <td>编辑</td>
+                <td>删除</td>
+            </tr>
+            <tr v-for="member in data">
+                <td>{{member.name}}</td>
+                <td>{{member.id}}</td>
+                <td><a :href="'/editPage.html?id='+member.id">编辑</a></td>
+                <td><a :href="'/deleteMember?id='+member.id">删除</a></td>
+            </tr>
+        </table>
+        <div align="center">
+            <form action="/addMember" method="post">
+                增加成员：<br>
+                name:<input name="name"><br>
+                <input type="submit"><br>
+            </form>
+            <form action="/find">
+                搜索成员：<br>
+                id:<input name="id"><br>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el:"#app",
+            data(){
+                return{
+                    data:""
+                }
+            },
+            mounted(){
+                axios.get('/listMember').then(res=>(this.data=res.data)).catch(function(error){
+                    console.log(error);
+                })
+            }
+        })
+    </script>
+</body>
+</html>
